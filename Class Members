@@ -1,0 +1,82 @@
+
+## 🧩 Types of Class Members
+
+| Type                 | Description                                                                           |
+| -------------------- | ------------------------------------------------------------------------------------- |
+| **Member Variables** | Also called **attributes** or **fields** — they store data about the object.          |
+| **Member Functions** | Also called **methods** — they define the behavior or actions the object can perform. |
+
+---
+
+## ✅ Example
+
+```cpp
+#include <iostream>
+using namespace std;
+
+class Person {
+public:
+    // 🔹 Member Variables
+    string name;
+    int age;
+
+    // 🔹 Member Function
+    void introduce() {
+        cout << "Hi, I'm " << name << " and I'm " << age << " years old." << endl;
+    }
+};
+```
+
+---
+
+## 🧪 Using Class Members
+
+```cpp
+int main() {
+    Person p1;         // Create an object
+    p1.name = "Sofiane";
+    p1.age = 21;
+
+    p1.introduce();    // Call member function
+    return 0;
+}
+```
+
+---
+
+## 🔐 Access Specifiers (control access to members)
+
+| Specifier   | Meaning                                                        |
+| ----------- | -------------------------------------------------------------- |
+| `public`    | Members are accessible from outside the class.                 |
+| `private`   | Members are **only accessible inside the class**.              |
+| `protected` | Like `private`, but accessible in child classes (inheritance). |
+
+### Example with `private`:
+
+```cpp
+class Account {
+private:
+    double balance;
+
+public:
+    void deposit(double amount) {
+        balance += amount;
+    }
+
+    double getBalance() {
+        return balance;
+    }
+};
+```
+
+---
+
+## 🧠 Summary
+
+| Member Type       | Example             | Description                   |
+| ----------------- | ------------------- | ----------------------------- |
+| Variable (field)  | `string name;`      | Stores object's data          |
+| Function (method) | `void introduce();` | Performs an action            |
+| Object uses them  | `p1.name = "Ali";`  | Access/modify them via object |
+
