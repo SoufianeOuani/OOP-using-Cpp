@@ -1,0 +1,103 @@
+
+## 🧱 What is a Class?
+
+A **class** is like a **blueprint** or **template** for creating objects.
+
+It defines:
+
+* **Data** (called *attributes* or *member variables*)
+* **Behavior** (called *functions* or *methods*)
+
+Example: A blueprint of a `Car` — it says a car has `color`, `speed`, and it can `drive()` or `brake()`.
+
+---
+
+## 📦 What is an Object?
+
+An **object** is a **real instance** of a class — a specific car like "Red Toyota moving at 60km/h".
+
+Each object has:
+
+* Its **own data**
+* It can use the **methods** defined in the class
+
+---
+
+## ✅ Syntax in C++
+
+### 👷 Defining a class:
+
+```cpp
+class Car {
+public:
+    string brand;
+    int speed;
+
+    void drive() {
+        cout << brand << " is driving at " << speed << " km/h." << endl;
+    }
+};
+```
+
+### 🚗 Creating an object:
+
+```cpp
+int main() {
+    Car myCar;            // create object
+    myCar.brand = "Toyota";
+    myCar.speed = 100;
+
+    myCar.drive();        // call method
+}
+```
+
+---
+
+## 🔍 Explanation
+
+| Part              | Meaning                                    |
+| ----------------- | ------------------------------------------ |
+| `class Car`       | You’re defining a blueprint called `Car`.  |
+| `public:`         | Makes things accessible outside the class. |
+| `brand` & `speed` | Attributes (variables) of the object.      |
+| `drive()`         | Method — function inside the class.        |
+| `myCar`           | Object (actual car with real values).      |
+
+---
+
+## 🔒 Access Specifiers
+
+You often see:
+
+* `public:` — accessible outside the class
+* `private:` — accessible **only inside** the class
+* `protected:` — accessible in child classes (inheritance)
+
+### Example:
+
+```cpp
+class Person {
+private:
+    int age; // can't access directly from outside
+
+public:
+    void setAge(int a) {
+        age = a;
+    }
+
+    int getAge() {
+        return age;
+    }
+};
+```
+
+---
+
+## 🧠 Analogy
+
+| Concept   | Real World                  |
+| --------- | --------------------------- |
+| Class     | Blueprint of a phone        |
+| Object    | A real iPhone or Samsung    |
+| Attribute | Color, battery, camera      |
+| Method    | Call(), Text(), TakePhoto() |
