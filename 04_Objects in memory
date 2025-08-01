@@ -1,0 +1,107 @@
+
+## 🧠 What Happens in Memory When You Create an Object?
+
+When you create an object in C++, memory is allocated for:
+
+* **Member variables (data)**
+* **Not for member functions** (functions are stored once, shared by all objects)
+
+---
+
+## 🧪 Example
+
+```cpp
+class Student {
+public:
+    string name;
+    int age;
+};
+
+int main() {
+    Student s1;
+    s1.name = "Sofiane";
+    s1.age = 21;
+}
+```
+
+### 🔍 In Memory:
+
+* `s1` is an object of type `Student`.
+* It occupies memory for:
+
+  * A `string` (`name`)
+  * An `int` (`age`)
+* The member functions (if there were any) are **not duplicated** per object.
+
+---
+
+## 🧰 Memory Allocation Types
+
+| Allocation Type | Example                         | Stored in    |
+| --------------- | ------------------------------- | ------------ |
+| **Static**      | Global objects                  | Data segment |
+| **Automatic**   | Local object like `Student s1;` | **Stack**    |
+| **Dynamic**     | `Student* s2 = new Student;`    | **Heap**     |
+
+---
+
+### 📌 Stack vs Heap
+
+| Feature     | Stack (`Student s1;`) | Heap (`new Student`)     |
+| ----------- | --------------------- | ------------------------ |
+| Lifetime    | Automatically managed | Must manually delete     |
+| Allocation  | Fast                  | Slower                   |
+| Scope-bound | Yes                   | No (you decide lifespan) |
+| Access      | Direct object         | Pointer to object        |
+
+---
+
+### 🔥 Dynamic Object Example
+
+```cpp
+Student* s2 = new Student;  // Allocated on heap
+s2->name = "Wanni";
+s2->age = 22;
+
+delete s2;  // Free the memory manually
+```
+
+---
+
+## 🎯 What Takes Space in Memory?
+
+Only **data members** (variables) occupy space per object. All objects share the **same function code**.
+
+So, if a class has many methods and you create 1000 objects, only the **data** is duplicated — not the functions.
+
+---
+
+## 👀 Visual View
+
+```cpp
+class Car {
+public:
+    string brand;   // ~32 bytes
+    int speed;      // 4 bytes
+    void drive();   // Shared among all objects
+};
+
+Car c1, c2;
+```
+
+Each object:
+
+* Has its **own** `brand` and `speed`
+* **Shares** the `drive()` function (not duplicated)
+
+---
+
+## ✅ Summary
+
+| Concept                     | What happens in memory                 |
+| --------------------------- | -------------------------------------- |
+| Object creation             | Allocates memory for data members only |
+| Member functions            | Stored once, shared among objects      |
+| Stack object (`Class obj;`) | Auto-deleted when function ends        |
+| Heap object (`new Class`)   | Stays until you `delete` it manually   |
+
