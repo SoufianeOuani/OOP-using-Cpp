@@ -1,0 +1,108 @@
+
+
+## 🔐 What are Access Specifiers?
+
+**Access specifiers** in C++ define **who can access the members** (variables and functions) of a class.
+
+They help control the **visibility** and **security** of data inside a class.
+
+---
+
+## 🧱 Types of Access Specifiers
+
+| Specifier   | Meaning                                                                          |
+| ----------- | -------------------------------------------------------------------------------- |
+| `public`    | Members are accessible from anywhere                                             |
+| `private`   | Members are accessible **only inside** the class                                 |
+| `protected` | Members are accessible inside the class and by **derived classes** (inheritance) |
+
+---
+
+## 🔹 `public` Example
+
+```cpp
+class Person {
+public:
+    string name;
+
+    void sayHello() {
+        cout << "Hi, I'm " << name << endl;
+    }
+};
+
+int main() {
+    Person p;
+    p.name = "Sofiane";    // ✅ Allowed
+    p.sayHello();          // ✅ Allowed
+}
+```
+
+* Public members can be accessed directly using the object.
+
+---
+
+## 🔒 `private` Example
+
+```cpp
+class Account {
+private:
+    double balance;
+
+public:
+    void setBalance(double b) {
+        balance = b;
+    }
+
+    double getBalance() {
+        return balance;
+    }
+};
+
+int main() {
+    Account a;
+    // a.balance = 1000;   ❌ Not allowed
+    a.setBalance(1000);     // ✅ Allowed
+    cout << a.getBalance(); // ✅ Allowed
+}
+```
+
+* **Private members are hidden** from outside the class.
+* You must use `public` functions (getters/setters) to access or modify them.
+
+---
+
+## 🛡️ `protected` Example (used with inheritance)
+
+```cpp
+class Animal {
+protected:
+    string type;
+};
+
+class Dog : public Animal {
+public:
+    void setType(string t) {
+        type = t;   // ✅ Allowed in derived class
+    }
+};
+```
+
+* `protected` is like `private`, but allows access in child classes.
+
+---
+
+## ✅ Summary Table
+
+| Access Level | Within Same Class | Derived Class | Outside Class |
+| ------------ | ----------------- | ------------- | ------------- |
+| `public`     | ✅ Yes             | ✅ Yes         | ✅ Yes         |
+| `protected`  | ✅ Yes             | ✅ Yes         | ❌ No          |
+| `private`    | ✅ Yes             | ❌ No          | ❌ No          |
+
+---
+
+## 🧠 Best Practices
+
+* Use `**private**` for sensitive data (like passwords or balances).
+* Use `**public**` for functions you want others to use (like `getName()`).
+* Use `**protected**` when planning to use inheritance.
