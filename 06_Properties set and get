@@ -1,0 +1,80 @@
+
+## 🔹 What Are Properties (`get` / `set`)?
+
+In object-oriented programming, **properties** allow you to control access to class members (usually private variables) through **getter** and **setter** methods, but using a **clean, readable syntax** — as if you were accessing a public variable directly.
+
+---
+
+## 🔸 Traditional Way (without properties)
+
+```cpp
+class Person {
+private:
+    string _firstName;
+
+public:
+    void SetFirstName(string name) {
+        _firstName = name;
+    }
+
+    string GetFirstName() {
+        return _firstName;
+    }
+};
+```
+
+Usage:
+
+```cpp
+Person p;
+p.SetFirstName("John");
+cout << p.GetFirstName();
+```
+
+---
+
+## 🔸 Property Way (with `__declspec(property)`)
+
+This is a Microsoft-specific feature, not standard C++. It lets you write:
+
+```cpp
+class Person {
+private:
+    string _firstName;
+
+public:
+    void SetFirstName(string name) { _firstName = name; }
+    string GetFirstName() { return _firstName; }
+
+    __declspec(property(get = GetFirstName, put = SetFirstName)) string FirstName;
+};
+```
+
+Usage:
+
+```cpp
+Person p;
+p.FirstName = "John";             // calls SetFirstName
+cout << p.FirstName << endl;      // calls GetFirstName
+```
+
+---
+
+## 🔹 How `get` and `set` Work Here
+
+* `get = GetFirstName` → when you **read** the property `FirstName`, it **calls** the `GetFirstName()` method.
+* `put = SetFirstName` → when you **assign** a value to `FirstName`, it **calls** the `SetFirstName()` method.
+
+You can rename `GetFirstName` or `SetFirstName` to anything you want, like `ReadName` or `WriteName`, but the keywords `get =` and `put =` are **fixed** syntax inside `__declspec(property)`.
+
+---
+
+## 🧠 Summary
+
+| Term        | Meaning                      | Can you change it? |
+| ----------- | ---------------------------- | ------------------ |
+| `get =`     | keyword to define the getter | ❌ No               |
+| `put =`     | keyword to define the setter | ❌ No               |
+| `GetName()` | the method used for "get"    | ✅ Yes              |
+| `SetName()` | the method used for "put"    | ✅ Yes              |
+
