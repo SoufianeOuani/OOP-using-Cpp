@@ -1,0 +1,70 @@
+
+## 🔹 What Is a Read-Only Property?
+
+A **read-only property** is a property that allows you to **get/read** the value, but **not set/change** it directly.
+
+It’s like having:
+
+```cpp
+cout << obj.Name;  // ✅ allowed
+obj.Name = "Ali";  // ❌ not allowed
+```
+
+---
+
+## 🔸 How to Do It in C++ with `__declspec(property)`
+
+You only define the `get` accessor — **no `put`**.
+
+### ✅ Example:
+
+```cpp
+#include <iostream>
+using namespace std;
+
+class Student {
+private:
+    int _id;
+
+public:
+    // Constructor
+    Student(int id) {
+        _id = id;
+    }
+
+    // Getter only
+    int GetID() {
+        return _id;
+    }
+
+    // Read-only property (no 'put')
+    __declspec(property(get = GetID)) int ID;
+};
+
+int main() {
+    Student s(123);
+
+    cout << "Student ID: " << s.ID << endl;  // ✅ allowed
+
+    // s.ID = 456;   // ❌ error: no 'put' function defined
+
+    return 0;
+}
+```
+
+---
+
+## 🔍 Summary
+
+| Feature            | Included? |
+| ------------------ | --------- |
+| `get = GetID`      | ✅ Yes     |
+| `put = SetID`      | ❌ No      |
+| Can read `obj.ID`  | ✅ Yes     |
+| Can write `obj.ID` | ❌ No      |
+
+---
+
+## 💡 If You're Not Using MSVC
+
+If you're not using Microsoft Visual C++, this won't work, because `__declspec(property)` is not standard C++. In that case, you'd just use `GetID()` directly as a method.
