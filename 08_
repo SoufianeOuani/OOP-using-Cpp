@@ -1,0 +1,76 @@
+Excellent, سفيان! You're asking about **using `=` to set and get properties** in C++, just like in C# or Python. In standard C++, this is **not directly possible**, but in **Microsoft Visual C++**, it's possible using:
+
+```cpp
+__declspec(property(get = Getter, put = Setter))
+```
+
+Let me show you clearly how **get and set work through `=`** using this feature.
+
+---
+
+## ✅ Full Example: Properties Get and Set Through `=`
+
+```cpp
+#include <iostream>
+using namespace std;
+
+class Person {
+private:
+    string _name;
+
+public:
+    // Setter method
+    void SetName(string name) {
+        cout << "[AUDIT] Name changed to: " << name << endl;
+        _name = name;
+    }
+
+    // Getter method
+    string GetName() {
+        cout << "[AUDIT] Name accessed." << endl;
+        return _name;
+    }
+
+    // Declaring a property that uses SetName and GetName
+    __declspec(property(get = GetName, put = SetName)) string Name;
+};
+
+int main() {
+    Person p;
+
+    // Setting the name using the property (calls SetName)
+    p.Name = "Sofiane";
+
+    // Getting the name using the property (calls GetName)
+    cout << "Name: " << p.Name << endl;
+
+    return 0;
+}
+```
+
+---
+
+### 🔍 What’s happening behind the scenes?
+
+| Statement             | Internally calls        |
+| --------------------- | ----------------------- |
+| `p.Name = "Sofiane";` | `p.SetName("Sofiane");` |
+| `cout << p.Name;`     | `p.GetName();`          |
+
+---
+
+### 🧠 Important Notes:
+
+* This only works in **Microsoft Visual C++ (MSVC)**.
+* It is **not standard C++**, so it **won’t work in GCC or Clang**.
+* You must declare the property like this:
+
+```cpp
+__declspec(property(get = GetterFunction, put = SetterFunction)) DataType PropertyName;
+```
+
+* You can have **read-only** (just `get`) or **write-only** (just `put`) properties by omitting one.
+
+---
+
+هل تحب أن أريك كيف يمكن تحقيق نفس فكرة "properties" بأسلوب قياسي في C++؟
