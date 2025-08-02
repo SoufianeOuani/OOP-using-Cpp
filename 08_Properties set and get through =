@@ -1,4 +1,3 @@
-Excellent, سفيان! You're asking about **using `=` to set and get properties** in C++, just like in C# or Python. In standard C++, this is **not directly possible**, but in **Microsoft Visual C++**, it's possible using:
 
 ```cpp
 __declspec(property(get = Getter, put = Setter))
@@ -70,7 +69,3 @@ __declspec(property(get = GetterFunction, put = SetterFunction)) DataType Proper
 ```
 
 * You can have **read-only** (just `get`) or **write-only** (just `put`) properties by omitting one.
-
----
-
-هل تحب أن أريك كيف يمكن تحقيق نفس فكرة "properties" بأسلوب قياسي في C++؟
