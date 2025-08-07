@@ -1,0 +1,118 @@
+
+## What is a Destructor?
+
+A **destructor** is a special member function in a class that is automatically called when an object **goes out of scope** or is **deleted**. Its main job is to **clean up** resources that the object may have acquired during its lifetime.
+
+---
+
+## Why do we need a Destructor?
+
+* To **release resources** such as dynamically allocated memory, file handles, network connections, or any other system resources.
+* Helps **prevent memory leaks** by freeing allocated memory.
+* Ensures **proper cleanup** so your program runs efficiently and safely.
+
+---
+
+## Characteristics of a Destructor
+
+* Has the **same name as the class**, but preceded by a tilde `~`.
+* Takes **no parameters**.
+* Returns **nothing** (no return type).
+* Automatically called by the compiler when an object is destroyed.
+* You can only have **one destructor** per class (no overloading).
+* If you don’t define one, the compiler provides a **default destructor** which just does basic cleanup (shallow destruction).
+
+---
+
+## Syntax of Destructor
+
+```cpp
+class ClassName {
+public:
+    ~ClassName() {
+        // cleanup code here
+    }
+};
+```
+
+---
+
+## Example
+
+```cpp
+#include <iostream>
+using namespace std;
+
+class Person {
+public:
+    Person() {
+        cout << "Constructor called\n";
+    }
+
+    ~Person() {
+        cout << "Destructor called\n";
+    }
+};
+
+int main() {
+    {
+        Person p1;  // Constructor called here
+    } // p1 goes out of scope here, destructor called automatically
+
+    cout << "End of main\n";
+    return 0;
+}
+```
+
+**Output:**
+
+```
+Constructor called
+Destructor called
+End of main
+```
+
+---
+
+## How does it work?
+
+* When `p1` is created, the constructor runs.
+* When `p1` goes out of scope (the block ends), the destructor runs automatically.
+* If you allocate memory dynamically inside a class, the destructor should free it.
+
+---
+
+## Destructors and Dynamic Memory
+
+If your class uses `new` to allocate memory, you should **free that memory in the destructor** using `delete` or `delete[]`.
+
+Example:
+
+```cpp
+class ArrayWrapper {
+    int* arr;
+    int size;
+public:
+    ArrayWrapper(int s) {
+        size = s;
+        arr = new int[size];
+        cout << "Memory allocated\n";
+    }
+    ~ArrayWrapper() {
+        delete[] arr;
+        cout << "Memory freed\n";
+    }
+};
+```
+
+---
+
+## Summary
+
+| Destructor                                  | Purpose                                      |
+| ------------------------------------------- | -------------------------------------------- |
+| Special member function, named `~ClassName` | Clean up resources before object destruction |
+| No parameters, no return type               | Automatically called when object destroyed   |
+| Frees dynamic memory and other resources    | Prevents memory leaks                        |
+| One per class, no overloading               | Compiler provides default if none defined    |
+
