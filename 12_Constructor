@@ -1,0 +1,97 @@
+
+## What is a Constructor?
+
+A **constructor** is a special member function in a class that is automatically called when an object of that class is created (instantiated). Its main purpose is to **initialize the object** — for example, to set initial values for data members or to allocate resources.
+
+---
+
+## Key Characteristics of Constructors
+
+* **Same name as the class:** The constructor function has exactly the same name as the class.
+* **No return type:** Constructors do not have a return type — not even `void`.
+* **Automatically called:** You don’t call the constructor explicitly. It is invoked automatically when an object is created.
+* **Can be overloaded:** You can have multiple constructors with different parameters (called constructor overloading).
+* **Default constructor:** A constructor with no parameters is called a *default constructor*.
+
+---
+
+## Why are Constructors Useful?
+
+* To **ensure an object starts life in a valid state** by initializing member variables.
+* To simplify code by **automatically handling setup** when an object is created.
+* To avoid forgetting to initialize important data, which can lead to bugs.
+
+---
+
+## Example
+
+```cpp
+class Person {
+public:
+    string name;
+    int age;
+
+    // Constructor: same name as class, no return type
+    Person(string personName, int personAge) {
+        name = personName;
+        age = personAge;
+        cout << "Constructor called: " << name << ", " << age << endl;
+    }
+};
+
+int main() {
+    Person p1("Alice", 30);  // Constructor called automatically
+    Person p2("Bob", 25);
+
+    cout << p1.name << " is " << p1.age << " years old." << endl;
+    cout << p2.name << " is " << p2.age << " years old." << endl;
+
+    return 0;
+}
+```
+
+---
+
+## Types of Constructors
+
+1. **Default constructor:** Takes no arguments (or all parameters have default values).
+
+   ```cpp
+   Person() {
+       name = "Unknown";
+       age = 0;
+   }
+   ```
+
+2. **Parameterized constructor:** Takes arguments to initialize members with specific values.
+
+3. **Copy constructor:** Initializes an object using another object of the same class.
+
+   ```cpp
+   Person(const Person &other) {
+       name = other.name;
+       age = other.age;
+   }
+   ```
+
+---
+
+## Additional Notes
+
+* If you don’t write any constructor, C++ provides a default constructor that does nothing (default initializes members).
+* If you define any constructor yourself, C++ does *not* generate a default constructor automatically.
+* Constructors can be used to allocate dynamic memory or open files — anything needed to set up the object.
+
+---
+
+## Summary
+
+| Aspect            | Description                                                       |
+| ----------------- | ----------------------------------------------------------------- |
+| Purpose           | Initialize objects upon creation                                  |
+| Name              | Same as the class                                                 |
+| Return type       | None (not even `void`)                                            |
+| When called       | Automatically when an object is created                           |
+| Can be overloaded | Yes, you can have multiple constructors with different parameters |
+| Usefulness        | Ensures objects start with valid initial state, prevents errors   |
+
