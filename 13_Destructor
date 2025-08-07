@@ -1,0 +1,108 @@
+
+## What is a Copy Constructor?
+
+A **copy constructor** is a special constructor in a class that creates a **new object as a copy of an existing object** of the same class.
+
+---
+
+## Why do we need a Copy Constructor?
+
+When you assign or pass objects **by value**, C++ needs a way to create a new object that is a **copy** of an existing object.
+
+* By default, C++ provides a **shallow copy** constructor which copies member values bit-by-bit.
+* However, if your class uses **dynamic memory allocation** (like pointers), the default shallow copy might cause problems (e.g., two objects sharing the same pointer).
+* You can define your **own copy constructor** to make a **deep copy** to properly handle such cases.
+
+---
+
+## Syntax of Copy Constructor
+
+```cpp
+ClassName(const ClassName &obj);
+```
+
+* It takes a reference to an object of the same class as its parameter.
+* The parameter is usually a **const reference** to prevent modifying the original object.
+
+---
+
+## Example
+
+```cpp
+#include <iostream>
+#include <cstring>
+using namespace std;
+
+class Person {
+private:
+    char* name;
+public:
+    // Constructor
+    Person(const char* inputName) {
+        name = new char[strlen(inputName) + 1];
+        strcpy(name, inputName);
+    }
+
+    // Copy constructor (deep copy)
+    Person(const Person &obj) {
+        name = new char[strlen(obj.name) + 1];
+        strcpy(name, obj.name);
+        cout << "Copy constructor called!\n";
+    }
+
+    // Destructor
+    ~Person() {
+        delete[] name;
+    }
+
+    void printName() {
+        cout << "Name: " << name << endl;
+    }
+};
+
+int main() {
+    Person p1("Alice");
+    Person p2 = p1;  // Copy constructor called here
+
+    p1.printName();
+    p2.printName();
+
+    return 0;
+}
+```
+
+**Output:**
+
+```
+Copy constructor called!
+Name: Alice
+Name: Alice
+```
+
+---
+
+## How it works?
+
+* When `Person p2 = p1;` is executed, the **copy constructor** is called.
+* It creates a new copy of `p1`’s data.
+* If you didn't write a copy constructor, the default shallow copy would copy just the pointer, not the data it points to — leading to problems like double deletion.
+
+---
+
+## Default vs Custom Copy Constructor
+
+| Default Copy Constructor                 | Custom Copy Constructor                          |
+| ---------------------------------------- | ------------------------------------------------ |
+| Performs shallow copy (member-wise copy) | Can perform deep copy (allocate new memory etc.) |
+| Provided by compiler if not defined      | User-defined to handle complex copy logic        |
+| Might cause issues with dynamic memory   | Avoids issues by properly copying resources      |
+
+---
+
+## Summary
+
+* **Copy constructor** creates a new object as a copy of an existing object.
+* It takes a **const reference** to the object to copy.
+* Essential for classes that manage resources like dynamic memory.
+* Prevents problems like double-free errors by performing deep copies.
+
