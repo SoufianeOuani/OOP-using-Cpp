@@ -1,0 +1,89 @@
+
+## 1. **Static Member Variables**
+
+* A static variable in a class is **shared among all objects** of that class.
+* It is **stored only once in memory**, not a separate copy for each object.
+* You can access it even without creating an object (via the class name).
+* It **must be defined outside the class** once.
+
+### Example:
+
+```cpp
+#include <iostream>
+using namespace std;
+
+class Student {
+public:
+    static int count; // Declaration of static variable
+    Student() {
+        count++; // Increase count when a new object is created
+    }
+};
+
+// Define the static variable outside the class
+int Student::count = 0;
+
+int main() {
+    Student s1;
+    Student s2;
+    cout << "Number of students: " << Student::count << endl; // Access via class name
+    return 0;
+}
+```
+
+**Explanation:**
+
+* `count` is shared among all `Student` objects.
+* Each time a new object is created, `count` increases.
+* Output: `Number of students: 2`.
+
+---
+
+## 2. **Static Member Functions**
+
+* A static function **does not require an object** to be called — you can call it directly with the class name.
+* It can **only access**:
+
+  * Static variables.
+  * Other static functions.
+* It **cannot** access non-static variables or use `this` because `this` is tied to a specific object.
+
+### Example:
+
+```cpp
+#include <iostream>
+using namespace std;
+
+class Math {
+public:
+    static int square(int x) { // Static function
+        return x * x;
+    }
+};
+
+int main() {
+    cout << "Square of 5 = " << Math::square(5) << endl;
+    return 0;
+}
+```
+
+**Output:** `Square of 5 = 25`
+
+---
+
+## 3. Static vs. Non-Static Members
+
+| Feature                | Static                        | Non-Static               |
+| ---------------------- | ----------------------------- | ------------------------ |
+| Memory storage         | One shared location in memory | Separate copy per object |
+| Access                 | Class name or object          | Object only              |
+| Requires an object?    | No                            | Yes                      |
+| Can access non-static? | No                            | Yes                      |
+
+---
+
+## 4. Common Uses
+
+* Counting the number of objects of a class.
+* Sharing data or settings between all objects.
+* Utility functions related to the class rather than a specific object.
