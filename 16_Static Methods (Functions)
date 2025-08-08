@@ -1,0 +1,112 @@
+
+## 1️⃣ What is a Static Method?
+
+A **static method** in a class is a function that:
+
+* **Belongs to the class itself** rather than any specific object.
+* **Can be called without creating an object** of the class.
+* **Can only access**:
+
+  * Other static members (variables or methods).
+* **Cannot**:
+
+  * Access non-static (instance) members directly.
+  * Use the `this` pointer (because `this` refers to a specific object).
+
+---
+
+## 2️⃣ Syntax
+
+```cpp
+class MyClass {
+public:
+    static void myFunction() {
+        // code here
+    }
+};
+```
+
+You call it with:
+
+```cpp
+MyClass::myFunction();
+```
+
+---
+
+## 3️⃣ Example
+
+```cpp
+#include <iostream>
+using namespace std;
+
+class Math {
+public:
+    static int multiply(int a, int b) { // Static function
+        return a * b;
+    }
+};
+
+int main() {
+    // Call without creating an object
+    cout << "3 x 4 = " << Math::multiply(3, 4) << endl;
+    return 0;
+}
+```
+
+**Output:**
+
+```
+3 x 4 = 12
+```
+
+---
+
+## 4️⃣ Another Example with Static Variables
+
+Static methods are often used together with static variables:
+
+```cpp
+#include <iostream>
+using namespace std;
+
+class Counter {
+private:
+    static int count;
+public:
+    Counter() {
+        count++;
+    }
+    static int getCount() { // Static method
+        return count;
+    }
+};
+
+// Initialize static variable
+int Counter::count = 0;
+
+int main() {
+    Counter c1, c2, c3;
+    cout << "Objects created: " << Counter::getCount() << endl;
+    return 0;
+}
+```
+
+**Output:**
+
+```
+Objects created: 3
+```
+
+---
+
+## 5️⃣ Key Points to Remember
+
+| Feature                        | Static Method | Non-Static Method |
+| ------------------------------ | ------------- | ----------------- |
+| Belongs to class or object?    | Class         | Object            |
+| Needs object to call?          | No            | Yes               |
+| Can access static members?     | Yes           | Yes               |
+| Can access non-static members? | No            | Yes               |
+| Has `this` pointer?            | No            | Yes               |
+
