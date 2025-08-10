@@ -1,0 +1,87 @@
+
+### 📌 Definition
+
+**Inheritance** is the mechanism in OOP that allows a class (called the **child** or **subclass**) to **acquire properties and behaviors** (attributes and methods) from another class (called the **parent** or **superclass**).
+
+This promotes **code reuse** and allows you to create hierarchical relationships between classes.
+
+---
+
+### 🔍 Key Points
+
+1. **Parent Class (Base Class / Superclass)**
+
+   * The class whose properties and methods are inherited.
+
+2. **Child Class (Derived Class / Subclass)**
+
+   * The class that inherits from the parent and can **extend** or **override** its functionality.
+
+3. **Access Control**
+
+   * Inheritance respects the **access modifiers**:
+
+     * **public** members → accessible in the child.
+     * **protected** members → accessible in the child but not outside.
+     * **private** members → **not** directly accessible in the child.
+
+4. **Types of Inheritance** (depending on language support):
+
+   * **Single**: One parent → one child.
+   * **Multiple**: One child inherits from multiple parents (C++ supports this, Java doesn’t directly).
+   * **Multilevel**: A class inherits from another child class.
+   * **Hierarchical**: Multiple children inherit from the same parent.
+   * **Hybrid**: Combination of multiple types.
+
+---
+
+### 💡 Example in C++
+
+```cpp
+#include <iostream>
+using namespace std;
+
+// Parent class
+class Animal {
+public:
+    void eat() {
+        cout << "This animal eats food.\n";
+    }
+};
+
+// Child class
+class Dog : public Animal {
+public:
+    void bark() {
+        cout << "The dog barks.\n";
+    }
+};
+
+int main() {
+    Dog myDog;
+    myDog.eat();  // Inherited from Animal
+    myDog.bark(); // Defined in Dog
+    return 0;
+}
+```
+
+**Output:**
+
+```
+This animal eats food.
+The dog barks.
+```
+
+---
+
+✅ **Benefits of Inheritance**
+
+* **Code reusability** (avoid rewriting the same methods).
+* **Better maintainability** (update parent, all children benefit).
+* **Logical hierarchy** in code structure.
+
+⚠️ **Pitfalls**
+
+* Overusing inheritance can make code **rigid** and **hard to maintain**.
+* Composition is sometimes a better choice than inheritance.
+
