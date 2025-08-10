@@ -1,0 +1,158 @@
+
+# 👨‍🏫 Lesson: Parameterized Constructor of the Base Class
+
+---
+
+### Hello class! Today we’ll learn how constructors work in a base class and how a derived class calls that constructor to initialize inherited data members.
+
+---
+
+## 1. The Base Class — `clsPerson`
+
+Let's start by understanding the base class.
+
+```cpp
+class clsPerson
+{
+private:
+	short _ID = 0;
+	string _FirstName;
+	string _LastName;
+	string _Email;
+	string _Phone;
+
+public:
+	clsPerson(short ID, string FirstName, string LastName, string Email, string Phone)
+	{
+		_ID = ID;
+		_FirstName = FirstName;
+		_LastName = LastName;
+		_Email = Email;
+		_Phone = Phone;
+	}
+	
+	// Getter and Setter methods (omitted here for brevity)
+	
+	void PrintInformation()
+	{
+		cout << "______________________________\n";
+		cout << "ID              : " << _ID << endl;
+		cout << "First Name      : " << _FirstName << endl;
+		cout << "Last Name       : " << _LastName << endl;
+		cout << "Full Name       : " << _FirstName + " " + _LastName << endl;
+		cout << "Email           : " << _Email << endl;
+		cout << "Phone           : " << _Phone << endl;
+		cout << "______________________________\n";
+	}
+};
+```
+
+### What do we see here?
+
+* The `clsPerson` class stores **basic personal information**.
+* It has a **parameterized constructor** that takes all the necessary values to initialize an object.
+* Note that **there is no default (empty) constructor**.
+
+---
+
+## 2. The Derived Class — `clsEmployee`
+
+Now, let's see the derived class:
+
+```cpp
+class clsEmployee : public clsPerson
+{
+private:
+	string _Title;
+	string _Department;
+	double _Salary;
+public:
+
+	clsEmployee(short ID, string FirstName, string LastName, string Email, string Phone, string Title, string Department, double Salary)
+		: clsPerson(ID, FirstName, LastName, Email, Phone)  // <-- Here we call the base class constructor
+	{
+		_Title = Title;
+		_Department = Department;
+		_Salary = Salary;
+	}
+
+	// Getter and Setter methods (omitted for brevity)
+};
+```
+
+### Important points here:
+
+* `clsEmployee` **inherits** from `clsPerson`.
+* Its constructor **must call the base class constructor** because `clsPerson` has no default constructor.
+* The syntax `: clsPerson(ID, FirstName, LastName, Email, Phone)` is called the **initializer list** — it calls the base class constructor **before** the body of `clsEmployee` constructor executes.
+* After calling the base constructor, it initializes its own members: `_Title`, `_Department`, `_Salary`.
+
+---
+
+## 3. Object Creation in `main`
+
+```cpp
+int main()
+{
+	clsEmployee Employee1(1, "Alex", "Doe", "Doe@gmail.com", "0616750089", "CEO", "NOVASolutions", 12000);
+
+	Employee1.PrintInformation();
+	cout << "Title: " << Employee1.getTitle() << endl;
+	cout << "Department: " << Employee1.getDepartment() << endl;
+	cout << "Salary: " << Employee1.getSalary() << endl;
+
+	system("pause>0");
+	return 0;
+}
+```
+
+### What happens here?
+
+* When we create `Employee1`, the `clsEmployee` constructor runs.
+* It **first calls** the base constructor `clsPerson(...)` with the arguments `(1, "Alex", "Doe", "Doe@gmail.com", "0616750089")`.
+* The base constructor initializes the personal info fields.
+* Then the derived constructor initializes employee-specific fields (`Title`, `Department`, `Salary`).
+* Finally, `Employee1.PrintInformation()` prints personal info from the base class, and the rest prints employee details.
+
+---
+
+## 4. Why do we **have to** call the base constructor explicitly?
+
+Because:
+
+* `clsPerson` has **no default constructor** (no constructor without parameters).
+* The compiler **does not know how to initialize** the base class without parameters.
+* So, the derived class **must explicitly tell** which base constructor to use and with what values.
+
+If you **omit** this call, your program will **fail to compile**.
+
+---
+
+## 5. Summary & Key Takeaways
+
+| Concept                                          | Explanation                           | Code Example                                             |
+| ------------------------------------------------ | ------------------------------------- | -------------------------------------------------------- |
+| Base class parameterized constructor             | Requires arguments to initialize data | `clsPerson(short ID, string FirstName, ...)`             |
+| Derived class constructor calls base constructor | Must initialize base part explicitly  | `clsEmployee(...) : clsPerson(ID, FirstName, ...)`       |
+| Initialization order                             | Base constructor runs **first**       | Base constructor runs before body of derived constructor |
+| Inheritance means reusing code                   | Derived class reuses and extends base | `clsEmployee` adds extra fields                          |
+
+---
+
+## 6. Bonus: What if base class had a default constructor?
+
+If `clsPerson` had a constructor like this:
+
+```cpp
+clsPerson() {
+    // default initialization
+}
+```
+
+Then, the derived class could skip calling the base constructor explicitly, but the base members might be initialized with default or garbage values, which may be undesired.
+
+---
+
+# 👨‍🏫 Exercise for you:
+
+Try commenting out the base class call in the `clsEmployee` constructor and compile — see what error the compiler gives you. It will help you understand the importance of this syntax!
