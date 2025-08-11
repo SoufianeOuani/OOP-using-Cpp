@@ -1,0 +1,86 @@
+
+## **Inheritance Visibility Modes in C++**
+
+When we inherit one class from another in C++, we must decide **how** the members of the base class will be treated in the derived class.
+This is controlled by **inheritance visibility modes**:
+
+* **`public` inheritance**
+* **`protected` inheritance**
+* **`private` inheritance**
+
+And if you **don’t write anything**, the default depends on the type of base:
+
+* For **classes** → default is `private` inheritance.
+* For **structs** → default is `public` inheritance.
+
+---
+
+### **1. Public Inheritance**
+
+```cpp
+class Base {
+public:    int pub;
+protected: int prot;
+private:   int priv;
+};
+
+class Derived : public Base {
+    // pub   → stays public
+    // prot  → stays protected
+    // priv  → NOT inherited (inaccessible)
+};
+```
+
+📌 **Rule:**
+Public inheritance models the "IS-A" relationship.
+Example: A `Car` **is a** `Vehicle`.
+
+---
+
+### **2. Protected Inheritance**
+
+```cpp
+class Derived : protected Base {
+    // pub   → becomes protected
+    // prot  → stays protected
+    // priv  → NOT inherited
+};
+```
+
+📌 **Rule:**
+Protected inheritance means "IS-A for derived classes only".
+The outside world **cannot** use base’s public members directly through the derived object.
+
+---
+
+### **3. Private Inheritance**
+
+```cpp
+class Derived : private Base {
+    // pub   → becomes private
+    // prot  → becomes private
+    // priv  → NOT inherited
+};
+```
+
+📌 **Rule:**
+Private inheritance models the "HAS-A" or "implemented-in-terms-of" relationship.
+From outside, `Derived` does **not** look like a `Base`.
+
+---
+
+### **Table Summary**
+
+| Base Member → Inheritance Mode | Public Inheritance | Protected Inheritance | Private Inheritance |
+| ------------------------------ | ------------------ | --------------------- | ------------------- |
+| **public**                     | public             | protected             | private             |
+| **protected**                  | protected          | protected             | private             |
+| **private**                    | not inherited      | not inherited         | not inherited       |
+
+---
+
+💡 **Important Points:**
+
+* **Private members** are never directly inherited (only accessible via base’s public/protected methods).
+* Visibility mode affects **only how inherited members are seen in the derived class and to the outside world**.
+* It does **not** affect access inside the base class itself.
