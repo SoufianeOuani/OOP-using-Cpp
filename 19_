@@ -1,0 +1,105 @@
+
+
+## **1. What is Function Overriding?**
+
+Function overriding in **Object-Oriented Programming (OOP)** happens when a **derived class** provides a **new implementation** for a function that is **already defined** in its base class.
+
+Think of it like this:
+The base class says *“Here’s how to do it”*, but the derived class says *“I’ll do it my own way”*.
+
+---
+
+## **2. The Key Conditions for Overriding**
+
+For a function to be considered **overridden** in C++:
+
+1. **Same name** as in the base class.
+2. **Same parameter list** (signature must match exactly — number and types of parameters).
+3. **Same return type** (or covariant return type in advanced cases).
+4. The base class function must be marked as **`virtual`** (or inherited from a class that marked it `virtual`).
+
+---
+
+## **3. Why `virtual`?**
+
+In C++, functions are **not virtual by default**.
+If you don’t use `virtual`, then calling the function through a **base class pointer or reference** will call the base version, even if the object is a derived one.
+
+When you declare a function as `virtual`, C++ uses **runtime polymorphism** (dynamic dispatch) to decide which version to run — the base or the derived.
+
+---
+
+## **4. Example:**
+
+```cpp
+#include <iostream>
+using namespace std;
+
+class Person {
+public:
+    virtual void PrintInfo() {
+        cout << "I am a person." << endl;
+    }
+};
+
+class Employee : public Person {
+public:
+    void PrintInfo() override {  // override keyword is optional but good practice
+        cout << "I am an employee." << endl;
+    }
+};
+
+int main() {
+    Person* p1 = new Person();
+    Person* p2 = new Employee();
+
+    p1->PrintInfo(); // Calls Person::PrintInfo()
+    p2->PrintInfo(); // Calls Employee::PrintInfo() because of virtual
+
+    delete p1;
+    delete p2;
+}
+```
+
+---
+
+### **Output:**
+
+```
+I am a person.
+I am an employee.
+```
+
+If we removed `virtual` from `Person::PrintInfo`, the output would be:
+
+```
+I am a person.
+I am a person.
+```
+
+because the function call would be **resolved at compile time** (static binding).
+
+---
+
+## **5. Why Use Function Overriding?**
+
+* To **customize behavior** for specific derived classes.
+* To implement **polymorphism** — the key OOP principle that allows writing code that works with **base class pointers/references** but behaves differently depending on the actual object type.
+
+---
+
+## **6. Extra: `override` and `final`**
+
+* `override`: tells the compiler that you **intend** to override a base function (helps catch mistakes).
+* `final`: prevents further overriding in classes that inherit from this one.
+
+Example:
+
+```cpp
+class Manager : public Employee {
+public:
+    void PrintInfo() final { // no class can override this further
+        cout << "I am a manager." << endl;
+    }
+};
+```
