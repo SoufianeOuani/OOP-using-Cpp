@@ -1,0 +1,93 @@
+
+## **1. Multi-level Inheritance Recap**
+
+Multi-level inheritance is when a class inherits from another derived class, creating a chain:
+
+```
+Base → Derived → MoreDerived
+```
+
+Example in words:
+`Person` → `Employee` → `Developer`
+
+---
+
+## **2. Overriding Across Multiple Levels**
+
+If a base class function is `virtual`:
+
+* A derived class can override it.
+* A further-derived class can override it again.
+* Which version runs depends on the **actual object type at runtime** (if you’re calling through a base pointer/reference).
+
+---
+
+## **3. Example Without Dynamic Memory**
+
+```cpp
+#include <iostream>
+using namespace std;
+
+class Person {
+public:
+    virtual void PrintInfo() {
+        cout << "I am a person." << endl;
+    }
+};
+
+class Employee : public Person {
+public:
+    void PrintInfo() override {
+        cout << "I am an employee." << endl;
+    }
+};
+
+class Developer : public Employee {
+public:
+    void PrintInfo() override {
+        cout << "I am a developer." << endl;
+    }
+};
+
+int main() {
+    Person p;
+    Employee e;
+    Developer d;
+
+    // Base reference to base object
+    Person& ref1 = p;
+    ref1.PrintInfo(); // Person::PrintInfo()
+
+    // Base reference to derived object
+    Person& ref2 = e;
+    ref2.PrintInfo(); // Employee::PrintInfo()
+
+    // Base reference to further-derived object
+    Person& ref3 = d;
+    ref3.PrintInfo(); // Developer::PrintInfo()
+
+    // Derived reference to further-derived object
+    Employee& ref4 = d;
+    ref4.PrintInfo(); // Developer::PrintInfo()
+}
+```
+
+---
+
+### **Output**
+
+```
+I am a person.
+I am an employee.
+I am a developer.
+I am a developer.
+```
+
+---
+
+## **4. Key Points**
+
+* Only one `virtual` in the base is needed — it stays virtual in all derived classes.
+* If a derived class doesn’t override it, it inherits the previous version’s behavior.
+* In multi-level inheritance, the **most-derived** version gets called at runtime.
+
