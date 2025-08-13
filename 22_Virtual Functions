@@ -1,0 +1,81 @@
+
+## 1️⃣ **What is a Virtual Function?**
+
+A **virtual function** in C++ is a member function in the base class that is declared using the keyword `virtual`.
+It allows **runtime polymorphism** — meaning the function that gets executed is determined **at runtime**, based on the **actual type of the object**, not the type of the pointer or reference.
+
+---
+
+## 2️⃣ **Why do we use it?**
+
+Without `virtual`, C++ uses **static binding** — the function call is decided at compile time based on the type of the pointer/reference.
+With `virtual`, C++ uses **dynamic binding** — the function call is decided at runtime based on the actual object.
+
+---
+
+## 3️⃣ **Example (Without vs With `virtual`)**
+
+```cpp
+#include <iostream>
+using namespace std;
+
+class Base {
+public:
+    virtual void Show() { // virtual function
+        cout << "Base Show()\n";
+    }
+};
+
+class Derived : public Base {
+public:
+    void Show() override { // override the base function
+        cout << "Derived Show()\n";
+    }
+};
+
+int main() {
+    Base* ptr;
+    Derived d;
+    ptr = &d;
+
+    ptr->Show(); // ✅ Prints "Derived Show()" because of virtual
+    return 0;
+}
+```
+
+🔹 Without `virtual`, the output would be `"Base Show()"` because the pointer type is `Base*`.
+
+---
+
+## 4️⃣ **How does it work internally?**
+
+When you declare a function as `virtual`:
+
+* The compiler creates a **vtable** (virtual table) for that class.
+* Each object has a hidden **vptr** (virtual pointer) pointing to its class’s vtable.
+* When you call a virtual function, the vtable is checked at runtime to decide which function to execute.
+
+---
+
+## 5️⃣ **Pure Virtual Functions**
+
+You can make a function **pure virtual** by assigning `= 0`, which makes the class **abstract** (cannot be instantiated).
+Example:
+
+```cpp
+class Shape {
+public:
+    virtual void Draw() = 0; // pure virtual function
+};
+```
+
+---
+
+## 📌 **Summary Table**
+
+| Feature               | Without `virtual`      | With `virtual`     |
+| --------------------- | ---------------------- | ------------------ |
+| Binding Type          | Static (Compile-time)  | Dynamic (Run-time) |
+| Decided By            | Pointer/Reference Type | Actual Object Type |
+| Supports Polymorphism | ❌ No                   | ✅ Yes              |
+
