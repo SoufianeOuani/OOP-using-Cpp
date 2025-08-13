@@ -1,0 +1,98 @@
+
+## **1️⃣ Static Binding (Early Binding)**
+
+**Definition:**
+The function to be called is determined **at compile time** based on the **type of the pointer/reference** — not the actual object.
+
+**How to get it:**
+
+* Happens **by default** for non-virtual functions.
+* Also applies when calling functions with normal (non-polymorphic) types.
+
+**Example:**
+
+```cpp
+#include <iostream>
+using namespace std;
+
+class Base {
+public:
+    void Show() { // NOT virtual
+        cout << "Base Show()\n";
+    }
+};
+
+class Derived : public Base {
+public:
+    void Show() {
+        cout << "Derived Show()\n";
+    }
+};
+
+int main() {
+    Base* ptr = new Derived();
+    ptr->Show(); // Output: "Base Show()" (decided at compile time)
+    delete ptr;
+}
+```
+
+📌 Even though the object is `Derived`, the compiler only looks at the type `Base*`.
+
+---
+
+## **2️⃣ Dynamic Binding (Late Binding)**
+
+**Definition:**
+The function to be called is determined **at runtime** based on the **actual object** being pointed to.
+
+**How to get it:**
+
+* Happens when a function is declared as `virtual` in the base class.
+
+**Example:**
+
+```cpp
+#include <iostream>
+using namespace std;
+
+class Base {
+public:
+    virtual void Show() { // virtual enables late binding
+        cout << "Base Show()\n";
+    }
+};
+
+class Derived : public Base {
+public:
+    void Show() override {
+        cout << "Derived Show()\n";
+    }
+};
+
+int main() {
+    Base* ptr = new Derived();
+    ptr->Show(); // Output: "Derived Show()" (decided at runtime)
+    delete ptr;
+}
+```
+
+📌 The program checks the **vtable** of the actual object to decide which function to call.
+
+---
+
+## **3️⃣ Key Differences Table**
+
+| Feature                  | Static (Early) Binding | Dynamic (Late) Binding                 |
+| ------------------------ | ---------------------- | -------------------------------------- |
+| **Decision Time**        | Compile Time           | Run Time                               |
+| **Keyword Required**     | None                   | `virtual` in base class                |
+| **Polymorphism Support** | ❌ No                   | ✅ Yes                                  |
+| **Performance**          | Slightly Faster        | Slightly Slower (due to vtable lookup) |
+| **Flexibility**          | Less                   | More                                   |
+
+---
+
+💡 **In short:**
+
+* **Static Binding:** Compiler decides *before* running → Faster but less flexible.
+* **Dynamic Binding:** Program decides *while* running → Enables polymorphism.
