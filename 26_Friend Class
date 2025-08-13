@@ -1,0 +1,62 @@
+
+
+## **Friend Classes in C++**
+
+A **friend class** is a special class that has permission to **access the private and protected members** of another class.
+It’s like giving another class a **VIP backstage pass** to see and use things normally hidden from the outside.
+
+---
+
+### **1. Syntax**
+
+You declare a friend class inside the class you want to share access with:
+
+```cpp
+class ClassA {
+private:
+    int secret = 42;
+
+public:
+    friend class ClassB; // ClassB can now access private/protected members of ClassA
+};
+```
+
+---
+
+### **2. Example**
+
+```cpp
+#include <iostream>
+using namespace std;
+
+class ClassA {
+private:
+    int secret = 42;
+
+public:
+    friend class ClassB; // Grant ClassB full access to ClassA
+};
+
+class ClassB {
+public:
+    void RevealSecret(ClassA obj) {
+        cout << "Secret is: " << obj.secret << endl; // Allowed because ClassB is a friend
+    }
+};
+
+int main() {
+    ClassA a;
+    ClassB b;
+    b.RevealSecret(a); // Output: Secret is: 42
+    return 0;
+}
+```
+
+---
+
+### **3. Key Points**
+
+* Friendship is **not mutual** — if `ClassB` is a friend of `ClassA`, it doesn’t mean `ClassA` is a friend of `ClassB`.
+* Friendship is **not inherited** — derived classes do not automatically become friends.
+* Friendship **breaks encapsulation**, so use it **only when necessary** (e.g., operator overloading, close cooperation between classes).
+
