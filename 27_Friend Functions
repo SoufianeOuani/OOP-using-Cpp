@@ -1,0 +1,60 @@
+
+## **Friend Functions in C++**
+
+A **friend function** is a non-member function (or sometimes a member of another class) that has permission to **access private and protected members** of a class.
+It’s like an “outsider” being given a **special access key** to the class’s private data.
+
+---
+
+### **1. Syntax**
+
+You declare it inside the class with the keyword `friend`:
+
+```cpp
+class MyClass {
+private:
+    int secret = 10;
+
+public:
+    friend void showSecret(MyClass obj); // Declaration
+};
+```
+
+---
+
+### **2. Example**
+
+```cpp
+#include <iostream>
+using namespace std;
+
+class MyClass {
+private:
+    int secret = 10;
+
+public:
+    friend void showSecret(MyClass obj); // Friend function
+};
+
+// This function is not a member of MyClass, but can still access its private members
+void showSecret(MyClass obj) {
+    cout << "Secret is: " << obj.secret << endl;
+}
+
+int main() {
+    MyClass obj;
+    showSecret(obj); // Output: Secret is: 10
+    return 0;
+}
+```
+
+---
+
+### **3. Key Points**
+
+* A friend function **is not a member function**.
+* It **can** access `private` and `protected` members of the class.
+* Friendship is **granted by the class** — you must declare it inside the class with `friend`.
+* Friendship is **not mutual** — declaring a function as a friend of class A doesn’t make class A a friend of that function’s class.
+* Common uses: operator overloading, special utility functions that need access to a class’s private data.
+
