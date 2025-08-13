@@ -1,0 +1,99 @@
+
+## **📌 What is Polymorphism?**
+
+**Polymorphism** means *"many forms"*.
+In OOP, it allows the **same function name** (or operator) to behave **differently** depending on the **type of object** that is calling it.
+
+---
+
+## **1️⃣ Types of Polymorphism in C++**
+
+Polymorphism comes in **two main types**:
+
+### **A) Compile-time Polymorphism (Static)**
+
+Happens when the function call is resolved **at compile time**.
+
+* Achieved by:
+
+  1. **Function Overloading** (same function name, different parameters)
+  2. **Operator Overloading**
+
+📌 **Example (Function Overloading):**
+
+```cpp
+#include <iostream>
+using namespace std;
+
+class Math {
+public:
+    int Add(int a, int b) { return a + b; }
+    double Add(double a, double b) { return a + b; }
+};
+
+int main() {
+    Math m;
+    cout << m.Add(2, 3) << endl;      // 5
+    cout << m.Add(2.5, 3.5) << endl;  // 6
+}
+```
+
+---
+
+### **B) Runtime Polymorphism (Dynamic)**
+
+Happens when the function call is resolved **at runtime**.
+
+* Achieved by:
+
+  1. **Inheritance + Virtual Functions**
+  2. **Function Overriding** (redefining a base class function in a derived class)
+
+📌 **Example (Virtual Function Overriding):**
+
+```cpp
+#include <iostream>
+using namespace std;
+
+class Animal {
+public:
+    virtual void Speak() {
+        cout << "Animal sound\n";
+    }
+};
+
+class Dog : public Animal {
+public:
+    void Speak() override {
+        cout << "Bark\n";
+    }
+};
+
+int main() {
+    Animal* ptr = new Dog();
+    ptr->Speak(); // Output: Bark (decided at runtime)
+    delete ptr;
+}
+```
+
+---
+
+## **2️⃣ Why Polymorphism is Important?**
+
+* **Code Reusability** → One interface for different types.
+* **Flexibility** → You can extend your program without changing existing code.
+* **Clean Architecture** → You can work with abstract classes & interfaces.
+
+---
+
+## **3️⃣ Summary Table**
+
+| Type             | When Decided | How Achieved                  | Example                                |
+| ---------------- | ------------ | ----------------------------- | -------------------------------------- |
+| **Compile-time** | At Compile   | Overloading, Templates        | `Add(int,int)` vs `Add(double,double)` |
+| **Runtime**      | At Runtime   | Virtual Functions, Overriding | `Animal* a = new Dog(); a->Speak();`   |
+
+---
+
+💡 **In short:**
+Polymorphism is what lets you write **one function call** that works for **many object types**, making your code **more flexible and maintainable**.
