@@ -1,0 +1,81 @@
+
+### 1. What is a Nested Class?
+
+A **nested class** is a class defined **inside another class**. The nested class is considered a member of the outer class.
+
+**Example:**
+
+```cpp
+#include <iostream>
+#include <string>
+using namespace std;
+
+class Person {
+public:
+    string fullName;
+
+    // Nested class
+    class Address {
+    public:
+        string street;
+        string city;
+        string country;
+
+        void printAddress() {
+            cout << street << ", " << city << ", " << country << endl;
+        }
+    };
+
+    Address address; // Outer class has an Address object
+
+    Person(string name, string st, string ci, string co) {
+        fullName = name;
+        address.street = st;
+        address.city = ci;
+        address.country = co;
+    }
+
+    void printPerson() {
+        cout << "Name: " << fullName << endl;
+        cout << "Address: ";
+        address.printAddress();
+    }
+};
+
+int main() {
+    Person p("John Doe", "123 Main St", "New York", "USA");
+    p.printPerson();
+    return 0;
+}
+```
+
+✅ Output:
+
+```
+Name: John Doe
+Address: 123 Main St, New York, USA
+```
+
+---
+
+### 2. Key Points about Nested Classes
+
+1. A **nested class** can access **private members of the outer class only if declared friend**. Otherwise, it works independently.
+2. Nested classes are useful to **group related functionality** and **encapsulate data**.
+3. You can create objects of the nested class **inside or outside the outer class**, but usually they are used as part of the outer class.
+
+---
+
+### 3. Example of Accessing Nested Class from Outside
+
+```cpp
+Person::Address myAddress; // Create nested class object outside
+myAddress.street = "456 Elm St";
+myAddress.city = "Boston";
+myAddress.country = "USA";
+```
+
+This is how **nested classes** differ from **structs inside a class**:
+
+* **Structs** are mainly for grouping data.
+* **Nested classes** can have their own methods and more complex behavior.
