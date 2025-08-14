@@ -1,0 +1,74 @@
+
+### 1. What is a structure inside a class?
+
+A **structure (struct)** is a user-defined data type that groups related variables together. Normally, a struct can exist on its own. But you can also **declare a struct inside a class**, which allows you to organize related data as a part of the class.
+
+**Example:**
+
+```cpp
+class Person {
+public:
+    struct Address {
+        std::string street;
+        std::string city;
+        std::string country;
+    };
+
+    std::string fullName;
+    Address address;
+};
+```
+
+Here:
+
+* `Address` is a **structure inside the class `Person`**.
+* The `Person` class contains `fullName` and an `Address` object.
+
+---
+
+### 2. Why use a struct inside a class?
+
+1. **Encapsulation**: It keeps related data together and scoped inside the class.
+2. **Organization**: Instead of having multiple separate variables for city, street, country, etc., you group them into a struct.
+3. **Reusability**: You can reuse the struct type for multiple objects inside the class or even outside if it’s public.
+
+---
+
+### 3. How to initialize a struct inside a class
+
+You can initialize it directly in the class constructor:
+
+```cpp
+class Person {
+public:
+    struct Address {
+        std::string street;
+        std::string city;
+        std::string country;
+    };
+
+    std::string fullName;
+    Address address;
+
+    Person(std::string name, std::string st, std::string ci, std::string co) {
+        fullName = name;
+        address = {st, ci, co}; // Initialize the struct inside the class
+    }
+};
+```
+
+Usage:
+
+```cpp
+Person p("John Doe", "123 Main St", "New York", "USA");
+std::cout << p.address.city;  // Output: New York
+```
+
+---
+
+### ✅ Summary
+
+* A **struct inside a class** is a convenient way to group related data inside that class.
+* It improves **organization** and **encapsulation**.
+* You can initialize it using the class constructor.
+
